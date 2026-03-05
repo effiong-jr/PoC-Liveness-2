@@ -12,7 +12,12 @@
       "Bash(npm install faceplugin-face-recognition-js onnxruntime-web)",
       "Bash(node scripts/copy-models.js)",
       "Bash(npx tsc --noEmit)",
-      "Bash(npm run build)"
+      "Bash(npm run build)",
+      "Bash(npm uninstall faceplugin-face-recognition-js onnxruntime-web)",
+      "Bash(npm install react-webcam @mediapipe/face_mesh @tensorflow/tfjs face-api.js)",
+      "Bash(npm install -D @types/react-webcam)",
+      "Bash(rm scripts/copy-models.js)",
+      "Bash(rm app/types/faceplugin.d.ts)"
     ]
   }
 }
