@@ -12,37 +12,33 @@ function copy(src, dest) {
   console.log(`Copied: ${path.relative(root, dest)}`);
 }
 
-// Copy ONNX model weights
-const models = [
-  'fr_detect.onnx',
-  'fr_liveness.onnx',
-  'fr_age.onnx',
-  'fr_expression.onnx',
-  'fr_eye.onnx',
-  'fr_feature.onnx',
-  'fr_gender.onnx',
-  'fr_landmark.onnx',
-  'fr_pose.onnx',
-];
+// Only the two models used by the liveness detection flow.
+// (The other 7 models in the SDK package are not called by this app.)
+const models = ['fr_detect.onnx', 'fr_liveness.onnx'];
 for (const m of models) {
   copy(path.join(sdkDir, 'model', m), path.join(publicDir, 'model', m));
 }
 
-// Copy OpenCV files
+// OpenCV JS loader + WASM binary
 const cvFiles = ['opencv.js', 'opencv_js.wasm'];
 for (const f of cvFiles) {
   copy(path.join(sdkDir, 'js', f), path.join(publicDir, 'js', f));
 }
 
-// Copy ONNX Runtime Web WASM binaries and MJS loader modules.
-// ORT 1.20+ splits the WASM backend into .wasm binaries AND .mjs JS loaders;
-// both must be served statically from the page origin so that
-// `import('ort-wasm-simd-threaded.jsep.mjs')` succeeds in the browser.
-const ortFiles = fs
-  .readdirSync(ortDir)
-  .filter((f) => f.endsWith('.wasm') || f.endsWith('.mjs'));
+// ORT WASM backend files.
+// ORT 1.20+ uses two variants:
+//  - jsep  : primary wasm execution provider (loaded first)
+//  - plain : fallback if jsep fails
+// asyncify and jspi are for unrelated use-cases (Asyncify/JSPI) and are never
+// loaded by this app, so we skip them to reduce deployment size.
+const ortFiles = [
+  'ort-wasm-simd-threaded.jsep.mjs',
+  'ort-wasm-simd-threaded.jsep.wasm',
+  'ort-wasm-simd-threaded.mjs',
+  'ort-wasm-simd-threaded.wasm',
+];
 for (const f of ortFiles) {
   copy(path.join(ortDir, f), path.join(publicDir, f));
 }
 
-console.log('\nAll model, WASM, and ORT loader files copied to /public successfully.');
+console.log('\nEssential model and WASM files copied to /public (~42 MB total).');
