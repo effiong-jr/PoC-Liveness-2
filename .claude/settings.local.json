@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:doc.faceplugin.com)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:docs.faceplugin.com)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:faceplugin.com)",
+      "Bash(npm install faceplugin-face-recognition-js onnxruntime-web)",
+      "Bash(node scripts/copy-models.js)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(npm run build)"
+    ]
+  }
+}

@@ -6,10 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "node scripts/copy-models.js"
   },
   "dependencies": {
+    "faceplugin-face-recognition-js": "^0.0.1",
     "next": "16.1.6",
+    "onnxruntime-web": "^1.24.2",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
